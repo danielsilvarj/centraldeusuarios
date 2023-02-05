@@ -15,9 +15,9 @@ public class UsuariosTest
 {
     private readonly TestHelper _testHelper;
 
-    public UsuariosTest(TestHelper testHelper)
+    public UsuariosTest()
     {
-        _testHelper = testHelper;
+        _testHelper = new TestHelper();
     }
 
     [Fact]
