@@ -9,67 +9,27 @@ using CentralUsuarios.Infra.Messages.Models;
 using CentralUsuarios.Infra.Messages.Producers;
 using CentralUsuarios.Infra.Messages.ValueObjects;
 using FluentValidation;
+using MediatR;
 using Newtonsoft.Json;
 
 namespace CentralDeUsuarios.Application.Services;
 
 public class UsuarioAppService : IUsuarioAppService
 {
+    private readonly IMediator _mediatR;
 
-    private readonly IUsuarioDomainService _usuarioDomainService;
-    private readonly MessageQueueProducer _messageQueueProducer;
-    private readonly ILogUsuariosPersistence _logUsuariosPersistence;
-    private readonly IMapper _mapper;
-
-    public UsuarioAppService(IUsuarioDomainService usuarioDomainService, MessageQueueProducer messageQueueProducer, IMapper mapper, ILogUsuariosPersistence logUsuariosPersistence)
+    public UsuarioAppService(IMediator mediatR)
     {
-        _usuarioDomainService = usuarioDomainService;
-        _messageQueueProducer = messageQueueProducer;
-        _mapper = mapper;
-        _logUsuariosPersistence = logUsuariosPersistence;
+        _mediatR = mediatR;
     }
 
-    public void CriarUsuario(CriarUsuarioCommand command)
+    public async Task AutenticarUsuario(AutenticarUsuarioCommand command)
     {
-        //_usuarioDomainService.CriarUsuario(command);
-        var usuario = _mapper.Map<Usuario>(command);
-
-        var validate = usuario.Validate;
-
-        if (!validate.IsValid)
-            throw new ValidationException(validate.Errors);
-
-
-        _usuarioDomainService.CriarUsuario(usuario);
-
-        var _messageQueueModel = new MessageQueueModel
-        {
-            Tipo = TipoMensagem.CONFIRMACAO_DE_CADASTRO,
-            Conteudo = JsonConvert.SerializeObject(new UsuariosMessageVO
-            {
-                Id = usuario.Id,
-                Nome = usuario.Nome,
-                Email = usuario.Email
-            })
-        };
-
-        _messageQueueProducer.Create(_messageQueueModel);
-
-        var logUsuarioModel = new LogUsuarioModel
-        {
-            Id = Guid.NewGuid(),
-            UsuarioId = usuario.Id,
-            DataHora = DateTime.Now,
-            Operacao = "Criacao de Usuario",
-            Detalhes = JsonConvert.SerializeObject(new {usuario.Nome, usuario.Email})
-        };
-
-        _logUsuariosPersistence.Create(logUsuarioModel);
-
+        await _mediatR.Send(command);
     }
 
-    public void Dispose()
+    public async Task CriarUsuario(CriarUsuarioCommand command)
     {
-        _usuarioDomainService.Dispose();
+        await _mediatR.Send(command);
     }
 }

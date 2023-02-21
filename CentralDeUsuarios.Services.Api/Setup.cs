@@ -19,6 +19,7 @@ using CentralDeUsuarios.Infra.Logs.Settings;
 using CentralDeUsuarios.Infra.Logs.Contexts;
 using CentralDeUsuarios.Infra.Logs.Interfaces;
 using CentralDeUsuarios.Infra.Logs.Persistence;
+using MediatR;
 
 namespace CentralDeUsuarios.Services.Api
 {
@@ -50,6 +51,11 @@ namespace CentralDeUsuarios.Services.Api
         public static void AddAutoMapperServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        }
+
+        public static void AddMediatRServices(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         public static void AddMongoDBServices(this WebApplicationBuilder builder)

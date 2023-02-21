@@ -18,9 +18,9 @@ namespace CentralDeUsuarios.Services.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(CriarUsuarioCommand command)
+        public async Task<IActionResult> Post(CriarUsuarioCommand command)
         {
-            _usuarioAppService.CriarUsuario(command);
+            await _usuarioAppService.CriarUsuario(command);
             return StatusCode(201,new 
             {
                 message = "Usuario cadastrado com sucesso!",

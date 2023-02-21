@@ -14,6 +14,7 @@ Setup.AddRegisterServices(builder);
 Setup.AddEntityFrameworkServices(builder);
 Setup.AddMessageServices(builder);
 Setup.AddAutoMapperServices(builder);
+Setup.AddMediatRServices(builder);
 Setup.AddMongoDBServices(builder);
 
 

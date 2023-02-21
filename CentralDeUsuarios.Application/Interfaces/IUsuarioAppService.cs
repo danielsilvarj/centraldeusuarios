@@ -2,7 +2,8 @@ using CentralDeUsuarios.Application.Commands;
 
 namespace CentralDeUsuarios.Application.Interfaces;
 
-public interface IUsuarioAppService : IDisposable
+public interface IUsuarioAppService
 {
-    void CriarUsuario(CriarUsuarioCommand command);
+    Task CriarUsuario(CriarUsuarioCommand command);
+    Task AutenticarUsuario(AutenticarUsuarioCommand command);
 }

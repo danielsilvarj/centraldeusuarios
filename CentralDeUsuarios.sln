@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralDeUsuarios.Infra.Log
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralDeUsuarios.IntegrationTests", "CentralDeUsuarios.IntegrationTests\CentralDeUsuarios.IntegrationTests.csproj", "{42E41B71-8A95-4F13-837C-2ED25D835CFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CentralDeusuarios.infra.Security", "CentralDeUsuarios.infra.Security\CentralDeusuarios.infra.Security.csproj", "{BD8A8017-56D4-4C50-8B70-9E0F77AE0FAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,11 +81,16 @@ Global
 		{42E41B71-8A95-4F13-837C-2ED25D835CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42E41B71-8A95-4F13-837C-2ED25D835CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42E41B71-8A95-4F13-837C-2ED25D835CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD8A8017-56D4-4C50-8B70-9E0F77AE0FAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD8A8017-56D4-4C50-8B70-9E0F77AE0FAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD8A8017-56D4-4C50-8B70-9E0F77AE0FAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD8A8017-56D4-4C50-8B70-9E0F77AE0FAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{BD8A8017-56D4-4C50-8B70-9E0F77AE0FAC} = {C9F3E867-041C-4922-9D4A-B55CC18686E0}
 		{42E41B71-8A95-4F13-837C-2ED25D835CFB} = {0F97ED6B-2FF8-4FF2-A1A1-F58BD768D4AB}
 		{E81F02C7-7E21-44E3-B39A-8650AD7C6A49} = {C9F3E867-041C-4922-9D4A-B55CC18686E0}
 		{C43AA3BB-E9E7-4523-83AA-DBC210138F3A} = {C9F3E867-041C-4922-9D4A-B55CC18686E0}
