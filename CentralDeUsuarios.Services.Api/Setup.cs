@@ -20,6 +20,12 @@ using CentralDeUsuarios.Infra.Logs.Contexts;
 using CentralDeUsuarios.Infra.Logs.Interfaces;
 using CentralDeUsuarios.Infra.Logs.Persistence;
 using MediatR;
+using CentralDeusuarios.infra.Security.Settings;
+using CentralDeUsuarios.Domain.Interfaces.Security;
+using CentralDeusuarios.infra.Security.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace CentralDeUsuarios.Services.Api
 {
@@ -29,7 +35,8 @@ namespace CentralDeUsuarios.Services.Api
         {
             builder.Services.AddTransient<IUsuarioAppService, UsuarioAppService>();
             builder.Services.AddTransient<IUsuarioDomainService, UsuarioDomainService>();
-            builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            //builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         public static void AddEntityFrameworkServices(this WebApplicationBuilder builder)
@@ -64,6 +71,38 @@ namespace CentralDeUsuarios.Services.Api
 
             builder.Services.AddSingleton<MongoDbContext>();
             builder.Services.AddTransient<ILogUsuariosPersistence, LogUsuariosPersistence>();
+        }
+
+        public static void AddJwtBearerSecurity(this WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JWTSettings"));
+            builder.Services.AddTransient<IAuthorizationSecurity, AutorizationSecurity>();
+
+            builder.Services.AddAuthentication(
+                auth => 
+                {
+                    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }
+            ).AddJwtBearer(
+                bearer => 
+                {
+                    bearer.RequireHttpsMetadata = false;
+                    bearer.SaveToken =true;
+                    bearer.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.ASCII.GetBytes
+                            (
+                                builder.Configuration.GetSection("JwtSettings").GetSection("SecretKey").Value
+                            )
+                        ),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                    };
+                }
+            );
         }
     }
 }

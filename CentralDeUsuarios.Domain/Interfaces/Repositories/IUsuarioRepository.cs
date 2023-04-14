@@ -11,5 +11,6 @@ namespace CentralDeUsuarios.Domain.Interfaces.Repositories
     public interface IUsuarioRepository : IBaseRepository<Usuario, Guid>
     {
         Usuario GetByEmail(string email);
+        Usuario GetByEmailAndSenha(string email, string senha);
     }
 }

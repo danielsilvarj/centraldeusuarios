@@ -16,19 +16,17 @@ Setup.AddMessageServices(builder);
 Setup.AddAutoMapperServices(builder);
 Setup.AddMediatRServices(builder);
 Setup.AddMongoDBServices(builder);
+Setup.AddJwtBearerSecurity(builder);
 
 
 builder.Services.AddHostedService<MessageQueueConsumer>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

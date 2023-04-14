@@ -22,9 +22,13 @@ namespace CentralDeUsuarios.Services.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(AutenticarUsuarioCommand command)
         {
-            await _usuarioAppService.AutenticarUsuario(command);
+            var model = await _usuarioAppService.AutenticarUsuario(command);
 
-            return StatusCode(200, new {}); // TODO
+            return StatusCode(200, new 
+                {
+                    message = "Usuário Autenticado com Sucesso",
+                    model
+                }); 
         }
     }
 }

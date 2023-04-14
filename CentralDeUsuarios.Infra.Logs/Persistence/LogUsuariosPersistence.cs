@@ -48,9 +48,19 @@ public class LogUsuariosPersistence : ILogUsuariosPersistence
         .ToList();
     }
 
-    public void Update(LogUsuarioModel model)
+    public List<LogUsuarioModel> GetAll(string email)
     {
-        var filter = Builders<LogUsuarioModel>.Filter.Eq(log => log.Id, model.Id);
-        _mongoDbContext.LogUsuarios.ReplaceOne(filter, model);
+        var filter = Builders<LogUsuarioModel>.Filter.AnyIn(log => log.Detalhes, email);
+        
+        return _mongoDbContext.LogUsuarios
+        .Find(filter)
+        .SortByDescending(log => log.DataHora)
+        .ToList();
     }
+
+    public void Update(LogUsuarioModel model)
+        {
+            var filter = Builders<LogUsuarioModel>.Filter.Eq(log => log.Id, model.Id);
+            _mongoDbContext.LogUsuarios.ReplaceOne(filter, model);
+        }
 }

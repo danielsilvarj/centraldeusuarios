@@ -3,6 +3,7 @@ using CentralDeUsuarios.Application.Commands;
 using CentralDeUsuarios.Application.Notifications;
 using CentralDeUsuarios.Domain.Entities;
 using CentralDeUsuarios.Domain.Interfaces.Repositories;
+using CentralDeUsuarios.Domain.Models;
 using CentralDeUsuarios.Infra.Logs.Models;
 using CentralUsuarios.Infra.Messages.Models;
 using CentralUsuarios.Infra.Messages.Producers;
@@ -13,7 +14,10 @@ using Newtonsoft.Json;
 
 namespace CentralDeUsuarios.Application.RequestHandlers;
 
-public class UsuarioRequestHandler : IRequestHandler<CriarUsuarioCommand>, IRequestHandler<AutenticarUsuarioCommand>, IDisposable
+public class UsuarioRequestHandler : 
+    IRequestHandler<CriarUsuarioCommand>, 
+    IRequestHandler<AutenticarUsuarioCommand, AuthorizationModel>,
+    IDisposable
 {
     
     private readonly IUsuarioDomainService _usuarioDomainService;
@@ -72,9 +76,26 @@ public class UsuarioRequestHandler : IRequestHandler<CriarUsuarioCommand>, IRequ
         return Unit.Value;
     }
 
-    public Task<Unit> Handle(AutenticarUsuarioCommand request, CancellationToken cancellationToken)
+    public async Task<AuthorizationModel> Handle(AutenticarUsuarioCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var model = _usuarioDomainService.AutenticarUsuario(request.Email, request.Senha);
+
+        var logUsuariosNotification = new LogUsuariosNotification
+        {
+            LogUsuario = new LogUsuarioModel
+                {
+                    Id = Guid.NewGuid(),
+                    UsuarioId = model.Id,
+                    DataHora = DateTime.Now,
+                    Operacao = "Autenticação de Usuario",
+                    Detalhes = JsonConvert.SerializeObject(new {model.Nome, model.Email})
+                }
+        };
+
+
+        await _mediatR.Publish(logUsuariosNotification);
+
+        return model;
     }
 
     public void Dispose()

@@ -12,5 +12,6 @@ public interface ILogUsuariosPersistence
     List<LogUsuarioModel> GetAll(DateTime dataMin, DateTime dataMax);
 
     List<LogUsuarioModel> GetAll(Guid usuarioId);
+    List<LogUsuarioModel> GetAll(string email);
     
 }

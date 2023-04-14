@@ -36,5 +36,14 @@ namespace CentralDeUsuarios.Infra.Data.Repositories
         {
             return _sqlServerContext.Usuario.FirstOrDefault(u => u.Email.Equals(email));
         }
+
+    public Usuario GetByEmailAndSenha(string email, string senha)
+    {
+        senha = MD5Helper.Encrypt(senha);
+
+        return _sqlServerContext.Usuario
+            .FirstOrDefault(u => u.Email.Equals(email) 
+                                && u.Senha.Equals(senha));
     }
+  }
 }
