@@ -21,7 +21,7 @@ public class AutorizationSecurity : IAuthorizationSecurity
   public string CreateToken(Usuario usuario)
   {
     var tokenHandle = new JwtSecurityTokenHandler();
-    var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey.ToString());
+    var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
 
     var tokenDescriptor = new SecurityTokenDescriptor
     {
