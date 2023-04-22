@@ -115,7 +115,7 @@ namespace CentralDeUsuarios.Services.Api
                     Version = "v1",
                     Title = "API - Central de Usuários",
                     Description = "API REST para controle de usuários",
-                    Contact = new OpenApiContact { Name = "Centra de Usuários", Email = "centraldeusuarios@email.com.br", Url = new Uri("http://www.cotiinformatica.com.br") }
+                    Contact = new OpenApiContact { Name = "Centra de Usuários", Email = "centraldeusuarios@email.com.br", Url = new Uri("http://www.site.com.br") }
                 });
 
                 s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
