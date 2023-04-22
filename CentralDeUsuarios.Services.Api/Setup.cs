@@ -26,6 +26,7 @@ using CentralDeusuarios.infra.Security.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace CentralDeUsuarios.Services.Api
 {
@@ -103,6 +104,49 @@ namespace CentralDeUsuarios.Services.Api
                     };
                 }
             );
+        }
+
+        public static void AddSwagger(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddSwaggerGen(s =>
+            {
+                    s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "API - Central de Usuários",
+                    Description = "API REST para controle de usuários",
+                    Contact = new OpenApiContact { Name = "Centra de Usuários", Email = "centraldeusuarios@email.com.br", Url = new Uri("http://www.cotiinformatica.com.br") }
+                });
+
+                s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+
         }
     }
 }
