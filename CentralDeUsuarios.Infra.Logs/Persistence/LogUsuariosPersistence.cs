@@ -1,6 +1,7 @@
 using CentralDeUsuarios.Infra.Logs.Contexts;
 using CentralDeUsuarios.Infra.Logs.Interfaces;
 using CentralDeUsuarios.Infra.Logs.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CentralDeUsuarios.Infra.Logs.Persistence;
@@ -50,8 +51,8 @@ public class LogUsuariosPersistence : ILogUsuariosPersistence
 
     public List<LogUsuarioModel> GetAll(string email)
     {
-        var filter = Builders<LogUsuarioModel>.Filter.AnyIn(log => log.Detalhes, email);
-        
+        var filter = Builders<LogUsuarioModel>.Filter
+                .Regex(log => log.Detalhes, new BsonRegularExpression(email));
         return _mongoDbContext.LogUsuarios
         .Find(filter)
         .SortByDescending(log => log.DataHora)
