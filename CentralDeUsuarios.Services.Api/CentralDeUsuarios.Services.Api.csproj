@@ -1,11 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
@@ -18,5 +16,4 @@
     <ProjectReference Include="..\CentralDeUsuarios.Infra.Logs\CentralDeUsuarios.Infra.Logs.csproj" />
     <ProjectReference Include="..\CentralDeUsuarios.infra.Security\CentralDeusuarios.infra.Security.csproj" />
   </ItemGroup>
-
 </Project>

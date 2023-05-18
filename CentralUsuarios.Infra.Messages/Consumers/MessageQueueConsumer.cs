@@ -26,13 +26,21 @@ public class MessageQueueConsumer : BackgroundService
         _serviceProvider = serviceProvider;
         _mailHelper = mailHelper;
 
+        // Via CloudAMQP: URL contem todos os parametros para a conexao
+        var connectionFactory = new ConnectionFactory
+        {
+            Uri = new Uri(_messageSettings.Host)
+        };
 
+
+        /** via Docker Local
+          * 
         var connectionFactory = new ConnectionFactory
         {
             HostName = _messageSettings.Host,
             UserName = _messageSettings.Username,
             Password = _messageSettings.Password
-        };
+        };*/
 
         _connection = connectionFactory.CreateConnection();
         _model = _connection.CreateModel();

@@ -56,7 +56,8 @@ public class UsuarioRequestHandler :
                 Email = usuario.Email
             })
         };
-
+        _messageQueueProducer.Create(_messageQueueModel);
+        
         var logUsuariosNotification = new LogUsuariosNotification
         {
             LogUsuario = new LogUsuarioModel

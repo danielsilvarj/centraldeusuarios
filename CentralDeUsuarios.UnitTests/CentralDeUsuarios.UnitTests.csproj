@@ -29,6 +29,7 @@
     <ProjectReference Include="..\CentralDeUsuarios.Infra.Data\CentralDeUsuarios.Infra.Data.csproj">
       <ReferenceSourceTarget></ReferenceSourceTarget>
     </ProjectReference>
+    <ProjectReference Include="..\CentralDeUsuarios.infra.Security\CentralDeusuarios.infra.Security.csproj" />
   </ItemGroup>
 
 </Project>

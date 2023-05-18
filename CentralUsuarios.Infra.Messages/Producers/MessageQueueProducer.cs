@@ -16,13 +16,27 @@ public class MessageQueueProducer
     {
         _messageSettings = messageSettings.Value;
 
+        // Via CloudAMQP: URL contem todos os parametros para a conexao
         _connectionFactory = new ConnectionFactory
         {
+            Uri = new Uri(_messageSettings.Host)
+
+            //HostName = _messageSettings.Host,
+            //Port = _messageSettings.Port,
+            //UserName = _messageSettings.Username,
+            //Password = _messageSettings.Password
+        };
+
+        /* via Docker Local
+         *
+        _connectionFactory = new ConnectionFactory
+        {
+          
             HostName = _messageSettings.Host,
             //Port = _messageSettings.Port,
             UserName = _messageSettings.Username,
             Password = _messageSettings.Password
-        };
+        };*/
 
     }
 

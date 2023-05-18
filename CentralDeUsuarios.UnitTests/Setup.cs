@@ -1,4 +1,6 @@
-﻿using CentralDeUsuarios.Domain.Interfaces.Repositories;
+﻿using CentralDeusuarios.infra.Security.Services;
+using CentralDeUsuarios.Domain.Interfaces.Repositories;
+using CentralDeUsuarios.Domain.Interfaces.Security;
 using CentralDeUsuarios.Domain.Services;
 using CentralDeUsuarios.Infra.Data.Contexts;
 using CentralDeUsuarios.Infra.Data.Repositories;
@@ -60,9 +62,10 @@ namespace CentralDeUsuarios.UnitTests
                 // Injetando a connection string na classe SqlServerContext
                 services.AddDbContext<SqlServerContext>(options => options.UseSqlServer(connectionString));
 
+                services.AddTransient<IAuthorizationSecurity, AutorizationSecurity>();
                 // Injetando a classe UsuarioRepository na interface IUsuarioRepository
                 services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-
+                services.AddTransient<IUnitOfWork, UnitOfWork>();
                 services.AddTransient<IUsuarioDomainService, UsuarioDomainService>();
 
                 #endregion

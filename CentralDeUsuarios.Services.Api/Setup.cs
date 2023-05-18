@@ -148,5 +148,22 @@ namespace CentralDeUsuarios.Services.Api
             });
 
         }
+        public static void AddCors(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(s => s.AddPolicy("DefaultPolicy", builder => 
+            {
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+            })
+            );
+        }
+
+        public static void UseCors(this WebApplication app)
+        {
+            app.UseCors("DefaultPolicy");
+        }
+        
+
     }
 }
